@@ -13,19 +13,19 @@ DWORD64 GetProcId(const wchar_t*);
 int main()
 {
 	cout << "IIDX W-MIX Wide positioner By VELIUS" << endl;
-	cout << "Go back to CastHour now. Make sure you're in the song select" << endl;
-	HWND hwnd = FindWindowA(NULL, "beatmania IIDX 29 CastHour main");
+	cout << "Go back to Resident now. Make sure you're in the song select" << endl;
+	HWND hwnd = FindWindowA(NULL, "beatmania IIDX 30 RESIDENT main");
 	HWND foreground = GetForegroundWindow();
 	if (hwnd == NULL)
 	{
-		cout << "Cannot find window. Make sure CH has been started." << endl;
+		cout << "Cannot find window. Make sure Resident has been started." << endl;
 		Sleep(3000);
 		exit(-1);
 	}
 	else
 	{
-		DWORD64 procID = GetProcId(L"spice64.exe");
-		//DWORD64 procID = GetProcId(L"launcher.exe");
+		//DWORD64 procID = GetProcId(L"spice64.exe");
+		DWORD64 procID = GetProcId(L"launcher.exe");
 
 		if (procID == NULL) {
 			cout << "Cannot obtain process. Make sure you're using spice64 or BTOOLS" << endl;
@@ -47,8 +47,8 @@ int main()
 			unsigned int gameplayread;
 			unsigned int resultscreenread;
 			//DWORD64 gameplayaddress = Base + 0xB6AE6C;
-			DWORD64 gameplayaddress = Base + 0xA08AD4;
-			DWORD64 resultscreenaddress = Base + 0x2B46B14;
+			DWORD64 gameplayaddress = Base + 0x6D6CFE4;
+			DWORD64 resultscreenaddress = Base + 0x2F9A274;
 			int gameplayflag = 0;
 			RECT rect;
 			GetWindowRect(hwnd, &rect);
@@ -72,10 +72,10 @@ int main()
 				ReadProcessMemory(handle, (BYTE*)resultscreenaddress, &resultscreenread, sizeof(resultscreenread), 0);
 
 				//cout << gameplayread << endl;
-				if (gameplayread == 640 && gameplayflag == 0)
+				if (gameplayread == 800 && gameplayflag == 0)
 				{
 					cout << "Trying to SET POSITION" << endl;
-					SetWindowPos(hwnd, 0, rect.left - 240, rect.top - 200, 2400, 1350, SWP_SHOWWINDOW);
+					SetWindowPos(hwnd, 0, rect.left, rect.top - 200, 2400, 1350, SWP_SHOWWINDOW);
 					gameplayflag = 1;
 				}
 				//cout << resultscreenread << endl;
@@ -95,7 +95,7 @@ int main()
 					}
 				}
 
-				if (gameplayread == 1280)
+				if (gameplayread == 1920)
 				{
 					SetWindowPos(hwnd, 0, rect.left, rect.top, 1920, 1080, SWP_SHOWWINDOW);
 					gameplayflag = 0;
